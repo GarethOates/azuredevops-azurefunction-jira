@@ -5,6 +5,9 @@
   "scripts": {
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
   "devDependencies": {}
 }
