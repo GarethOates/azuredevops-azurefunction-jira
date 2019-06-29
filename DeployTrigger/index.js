@@ -39,7 +39,11 @@ module.exports = async function (context, req) {
 
         context.log('Found Issue with Id: ' + issueId);
 
-        if (tasksProcessed.includes(issueId)) continue;
+        if (tasksProcessed.includes(issueId)) {
+            context.log('Issue already updated');
+
+            continue;
+        };
 
         tasksProcessed[index] = issueId;
         index++;

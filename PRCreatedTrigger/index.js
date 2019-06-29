@@ -25,4 +25,6 @@ module.exports = async function (context, req) {
     await Jira.setIssueStatus(issueId, Transitions.IN_PROGRESS_TO_FIXED);
 
     context.log('Task transitioned to Fixed by Programmer');
+
+    context.done();
 };
