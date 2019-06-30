@@ -1,5 +1,4 @@
 const rp = require('request-promise');
-
 const username = process.env["JIRA_USERNAME"];
 const apikey = process.env["JIRA_API_KEY"];
 const baseUrl = process.env["JIRA_BASE_URL"];
