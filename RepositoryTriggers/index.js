@@ -39,6 +39,6 @@ module.exports = async function (context, req) {
 
     await Jira.setIssueStatus(issueId, transition);
 
-    context.log('Task transitioned successfully');
+    context.log('Issue transitioned successfully');
     context.done();
 };

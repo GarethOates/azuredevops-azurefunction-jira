@@ -6,13 +6,13 @@ const baseUrl = process.env["JIRA_BASE_URL"];
 module.exports = {
     getIssueId(message) {
         const pattern = /VF-(\d){2,4}/g;
-        const taskArray = message.match(pattern);
+        const issueArray = message.match(pattern);
 
-        if (!taskArray) {
+        if (!issueArray) {
             return null;
         }
 
-        return taskArray[0];
+        return issueArray[0];
     },
     async getValidTransitions(issueId) {
         let options = getOptions(issueId);

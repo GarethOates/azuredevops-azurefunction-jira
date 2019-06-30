@@ -1,4 +1,4 @@
-# Azure DevOps to JIRA - Automating task status updates using Azure Functions
+# Azure DevOps to JIRA - Automating issue status updates using Azure Functions
 
 This repo is the basis of a future post on my blog over at garethoates.com.
 

@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
     context.log(`Deployment to: ${environment}`);
 
     const index = 0;
-    const tasksProcessed = [];
+    const issuesProcessed = [];
 
     commits.forEach(async commit => {
         const issueId = Jira.getIssueId(commit.message);
@@ -39,13 +39,13 @@ module.exports = async function (context, req) {
 
         context.log('Found Issue with Id: ' + issueId);
 
-        if (tasksProcessed.includes(issueId)) {
+        if (issuesProcessed.includes(issueId)) {
             context.log('Issue already updated');
 
             continue;
         };
 
-        tasksProcessed[index] = issueId;
+        issuesProcessed[index] = issueId;
         index++;
 
         const transitions = Jira.getValidTransitions(issueId);
