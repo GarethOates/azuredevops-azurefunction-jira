@@ -34,7 +34,8 @@ module.exports = async function (context, req) {
 
         if (!issueId) {
             context.log(`Issue ${issueId} not found`);
-            continue;
+
+            return;
         };
 
         context.log('Found Issue with Id: ' + issueId);
@@ -42,7 +43,7 @@ module.exports = async function (context, req) {
         if (issuesProcessed.includes(issueId)) {
             context.log('Issue already updated');
 
-            continue;
+            return;
         };
 
         issuesProcessed[index] = issueId;
@@ -54,7 +55,7 @@ module.exports = async function (context, req) {
         if (!transitions.includes(status)) {
             context.log('No valid transitions found');
 
-            continue;
+            return;
         };
 
         context.log("Found valid transition");
