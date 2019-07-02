@@ -33,16 +33,12 @@ module.exports = async function (context, req) {
         const issueId = Jira.getIssueId(commit.message);
 
         if (!issueId) {
-            context.log(`Issue ${issueId} not found`);
-
             return;
         };
 
-        context.log('Found Issue with Id: ' + issueId);
+        context.log('Processing Issue: ' + issueId);
 
         if (issuesProcessed.includes(issueId)) {
-            context.log('Issue already updated');
-
             return;
         };
 
@@ -53,7 +49,7 @@ module.exports = async function (context, req) {
         const status = Transitions[environment.toUpperCase()];
 
         if (!transitions.includes(status)) {
-            context.log('No valid transitions found');
+            context.log('No valid transitions found. Skipping');
 
             return;
         };
@@ -62,7 +58,7 @@ module.exports = async function (context, req) {
 
         await Jira.setIssueStatus(issueId, status);
 
-        context.log(`${issueId} transitioned to status ${status}`);
+        context.log(`${issueId} transitioned to DEPLOYED IN ${status}`);
     });
 
     context.log("Finished processing commit messages");
