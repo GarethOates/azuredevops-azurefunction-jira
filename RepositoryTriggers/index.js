@@ -24,6 +24,11 @@ module.exports = async function (context, req) {
 
     const issueId = Jira.getIssueId(message);
 
+    if (!issueId) {
+        context.log(`Issue ${issueId} not found`);
+        context.done();
+    }
+
     context.log('Issue Id: ' + issueId);
 
     const validTransitions = await Jira.getValidTransitions(issueId);
