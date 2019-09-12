@@ -50,7 +50,7 @@ module.exports = {
 ```
 
 The easiest way to determine what the valid values are for this, is to set a breakpoint
-on line 25 in `shared/jira.js` and inspect the contents of the `result` variable.
+in the getValidTransitions function inside `shared/jira.js` and inspect the contents of the `result` variable.
 This will show you the transitions which are available, and their corresponding `id` values.
 
 ### Running the app locally
