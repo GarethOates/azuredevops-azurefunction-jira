@@ -45,7 +45,7 @@ module.exports = async function (context, req) {
         issuesProcessed[index] = issueId;
         index++;
 
-        const transitions = Jira.getValidTransitions(issueId);
+        const transitions = await Jira.getValidTransitions(issueId);
         const status = Transitions[environment.toUpperCase()];
 
         if (!transitions.includes(status)) {

@@ -1,4 +1,4 @@
-const rp = require('request-promise');
+const requestPromise = require('request-promise');
 const username = process.env["JIRA_USERNAME"];
 const apikey = process.env["JIRA_API_KEY"];
 const baseUrl = process.env["JIRA_BASE_URL"];
@@ -18,7 +18,7 @@ module.exports = {
         let options = getOptions(issueId);
         options.method = 'GET';
 
-        const resultString = await rp(options);
+        const resultString = await requestPromise(options);
         const result = JSON.parse(resultString);
 
         let states = result.transitions
@@ -31,7 +31,7 @@ module.exports = {
         options.method = 'POST';
         options.body = JSON.stringify({ "transition": { "id": status }});
 
-        let result = await rp(options);
+        let result = await requestPromise(options);
 
         return result;
     }
