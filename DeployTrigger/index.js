@@ -26,31 +26,34 @@ module.exports = async function (context, req) {
 
     context.log(`Deployment to: ${environment}`);
 
-    const index = 0;
     const issuesProcessed = [];
 
-    commits.forEach(async commit => {
+    commits.forEach(async (commit, index) => {
         const issueId = Jira.getIssueId(commit.message);
 
         if (!issueId) {
+            context.log('Could not determine issue Id');
             return;
         };
 
         context.log('Processing Issue: ' + issueId);
 
         if (issuesProcessed.includes(issueId)) {
+            context.log('Issue already processed. Skipping');
             return;
         };
 
         issuesProcessed[index] = issueId;
         index++;
 
+        context.log('Getting Valid Transitions..');
         const transitions = await Jira.getValidTransitions(issueId);
-        const status = Transitions[environment.toUpperCase()];
+        
+        context.log('Getting correct status value');
+        const status = Transitions[environment];
 
         if (!transitions.includes(status)) {
             context.log('No valid transitions found. Skipping');
-
             return;
         };
 
