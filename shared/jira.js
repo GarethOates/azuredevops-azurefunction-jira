@@ -18,8 +18,12 @@ module.exports = {
         let options = getOptions(issueId);
         options.method = 'GET';
 
+        console.log(`Getting transitions for ${issueId}`)
+
         const resultString = await requestPromise(options);
         const result = JSON.parse(resultString);
+
+        console.log(`Got transitions`);
 
         let states = result.transitions
             .map(transition => parseInt(transition.id));

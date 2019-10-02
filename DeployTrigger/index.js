@@ -27,34 +27,42 @@ module.exports = async function (context, req) {
     context.log(`Deployment to: ${environment}`);
 
     const issuesProcessed = [];
+    let index = 0;
 
-    commits.forEach(async (commit, index) => {
+    for (let i = 0; i < commits.length; i++) {
+        let commit = commits[i];
+
         const issueId = Jira.getIssueId(commit.message);
 
         if (!issueId) {
             context.log('Could not determine issue Id');
-            return;
+            continue;
         };
 
-        context.log('Processing Issue: ' + issueId);
+        context.log(`Processing Issue: ${issueId}`);
 
         if (issuesProcessed.includes(issueId)) {
             context.log('Issue already processed. Skipping');
-            return;
+            continue;
         };
 
         issuesProcessed[index] = issueId;
         index++;
 
         context.log('Getting Valid Transitions..');
-        const transitions = await Jira.getValidTransitions(issueId);
+        let transitions = await Jira.getValidTransitions(issueId);
         
+        if (!transitions) {
+            context.log('Could not retrieve transitions');
+            continue;
+        }
+
         context.log('Getting correct status value');
         const status = Transitions[environment];
 
         if (!transitions.includes(status)) {
             context.log('No valid transitions found. Skipping');
-            return;
+            continue;
         };
 
         context.log("Found valid transition");
@@ -62,7 +70,7 @@ module.exports = async function (context, req) {
         await Jira.setIssueStatus(issueId, status);
 
         context.log(`${issueId} transitioned to DEPLOYED IN ${status}`);
-    });
+    }
 
     context.log("Finished processing commit messages");
     context.done();
